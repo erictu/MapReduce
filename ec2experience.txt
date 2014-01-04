@@ -1,0 +1,73 @@
+1. How long did each of the six runs take? How many mappers and how many reducers did you use?
+
+	run 1: (freedom, 0) on the 2005 dataset with combiner off
+		time: 16 minutes, 52 seconds
+		mappers: 242
+		reducers: 33
+
+	run 2: (freedom, 0) on the 2005 dataset with combiner on
+		time: 6 minutes, 34 seconds
+		mappers: 242
+		reducers: 33
+
+	run 3: (capital, 0) on the 2006 dataset with combiner on
+		time: 15 mins, 20 seconds
+		mappers: 348
+		reducers: 33
+		processing rate: 0.01938 gb/s
+
+	run 4: (capital, 0) on the 2006 dataset with combiner on
+		time: 8 mins, 58 seconds
+		mappers: 348
+		reducers: 33
+		processing rate: 0.03313 gb/s
+
+	run 5: (landmark, 1) on the 2006 dataset with combiner on
+		time: 8 mins, 50 seconds
+		mappers: 348
+		reducers: 33
+		processing rate: 0.03363 gb/s
+
+	run 6: (monument, 2) on the 2006 dataset with combiner on
+		time: 8 mins, 51 seconds
+		mappers: 348
+		reducers: 33
+		processing rate: 0.03357 gb/s
+
+
+2. For the two runs with (freedom, 0), how much faster did your code run on the 5 workers with the combiner turned on than with the combiner turned off? Express your answer as a percentage.
+
+((16 minutes 52 seconds)-(6 minutes 34 seconds))/(6 minutes 34 seconds)=1.5685, so 156.85% faster
+
+
+3. For the runs on the 2006 dataset, what was the median processing rate per GB (= 2^30 bytes) of input for the tests using 5 workers? Using 9 workers?
+
+The median processing rates are shown above in part 1. The median processing rate for 5 workers is 0.01938 gb/s, and the median processing rate for 9 workers is 0.03357 gb/s.
+
+
+4. What was the percent speedup of running (capital, 0) with 9 workers over 5 workers? What is the maximum possible speedup, assuming your code is fully parallelizable? How well, in your opinion, does Hadoop parallelize your code? Justify your answer in 1-2 sentences.
+
+(0.03357-0.01938)/0.01938 = 0.7322 = 73.22% faster
+Optimal is (9-5)/5 = 0.8 = 80% faster
+
+73.22/80 = 0.9153 = 91.53% efficient
+
+In my opinion, Hadoop parallelizes code pretty well and it parallelizes at a speedup that is 91.53% of the maximum speedup.
+
+
+5. For a single run on the 2006 dataset, what was the price per GB processed on with 5 workers? With 9 workers? (Recall that an extra-large instance costs $0.58 per hour, rounded up to the nearest hour.)
+
+	($0.58)*(5 workers)*(1 hour) = $2.90
+	GB Processed: (19,139,821,102 bytes)*(1/2^30 gb/bytes) = 17.82534 gb
+	$2.90/17.82534 gb = 
+		$0.16 per gb
+
+	($0.58)*(9 workers)*(1 hour) = $5.22
+	GB Processed: (19,141,786,065 bytes)*(1/2^30 gb/bytes) = 17.82718 gb
+	$5.33/17.82718 gb = 
+		$0.30 per gb
+
+
+6. How much total money did you use to complete this project?
+
+($0.58)*(5 workers)*(1 hour)*(3 jobs) + ($0.58)*(9 workers)*(1 hour)*(3 jobs) = $24.36
